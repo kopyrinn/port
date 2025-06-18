@@ -6,6 +6,7 @@
     <title>Easy Prod - создаем сайты и приложения</title>
     <link rel="stylesheet" href="assets/css/style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
 <body>
     <header class="l-header">
@@ -174,3 +175,133 @@
     <script src="assets/js/main.js"></script>
 </body>
 </html>
+
+
+<style type="text/css">
+  #sphe-app {
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,0,0,0.5) 200%);
+    position: relative;
+    font-family: "Montserrat", serif;
+    overflow: hidden;
+  }
+
+  @font-face {
+    font-family: "Montserrat";
+    src: url(https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap);
+  }
+
+  #sphe-app .sphe-hero {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #sphe-app .sphe-title-1,
+  #sphe-app .sphe-title-2 {
+    margin: 0;
+    padding: 0;
+    color: black;
+    text-transform: uppercase;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 1);
+    line-height: 100%;
+    user-select: none;
+  }
+
+  #sphe-app .sphe-title-1 {
+    position: relative;
+    z-index: 2;
+    font-size: 100px;
+    font-weight: 700;
+  }
+
+  #sphe-app .sphe-title-2 {
+    z-index: 2;
+    font-size: 80px;
+    font-weight: 500;
+  }
+
+  #sphe-app .sphe-buttons {
+    position: absolute;
+    width: 100%;
+    bottom: 15px;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+  }
+
+  #sphe-app .sphe-button {
+    font-family: "Montserrat", serif;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    border: 1px solid grey;
+    padding: 4px 8px;
+    cursor: pointer;
+  }
+
+  #sphe-app #sphe-webgl-canvas {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: 1;
+  }
+</style>
+
+<div id="sphe-app">
+  <div class="sphe-hero">
+    <h1 class="sphe-title-1">Цифровые решения</h1>
+    <h2 class="sphe-title-2">которые работают</h2>
+  </div>
+
+  <canvas id="sphe-webgl-canvas"></canvas>
+</div>
+
+<script type="module">
+  import Spheres2Background from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.8/build/backgrounds/spheres2.cdn.min.js'
+
+  const app = document.getElementById('sphe-app')
+  const canvas = app.querySelector('#sphe-webgl-canvas')
+  const button = app.querySelector('#sphe-colors-btn')
+
+  const bg = Spheres2Background(canvas, {
+    count: 200,
+    colors: [0xff0000, 0x0, 0xffffff],
+    minSize: 0.5,
+    maxSize: 1
+  })
+
+  // Только клики внутри sphe-app
+  app.addEventListener('click', (ev) => {
+    if (ev.target !== button) bg.togglePause()
+  })
+
+  button.addEventListener('click', () => {
+    bg.spheres.setColors([
+      0xffffff * Math.random(),
+      0xffffff * Math.random(),
+      0xffffff * Math.random()
+    ])
+    bg.spheres.light1.color.set(0xffffff * Math.random())
+  })
+
+
+ function randomColors() {
+    bg.spheres.setColors([
+          0xffffff * Math.random(),
+          0xffffff * Math.random(),
+          0xffffff * Math.random()
+        ])
+        bg.spheres.light1.color.set(0xffffff * Math.random())    
+ }
+
+ randomColors();
+</script>
