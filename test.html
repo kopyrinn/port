@@ -1,0 +1,26 @@
+<!-- index.html -->
+<carousel-block></carousel-block>
+
+<script>
+class CarouselBlock extends HTMLElement {
+  constructor() {
+    super();
+    const shadow = this.attachShadow({ mode: 'open' });
+
+    fetch('carpuse.html')
+      .then(res => res.text())
+      .then(html => {
+        shadow.innerHTML = html;
+        const script = shadow.querySelector('script');
+        if (script) {
+          const newScript = document.createElement('script');
+          newScript.textContent = script.textContent;
+          shadow.removeChild(script);
+          shadow.appendChild(newScript);
+        }
+      });
+  }
+}
+
+customElements.define('carousel-block', CarouselBlock);
+</script>
