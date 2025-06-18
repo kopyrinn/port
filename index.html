@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Easy Prod - создаем сайты и приложения</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/buble.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link href="assets/img/fav.png" rel="icon">
     <link href="assets/img/fav.png" rel="apple-touch-icon"> 
@@ -138,7 +139,14 @@
 
             </div>
         </section>
+        <div id="sphe-app">
+          <div class="sphe-hero">
+            <h1 class="sphe-title-1">Создаём лёгкость</h1>
+            <h2 class="sphe-title-2">в цифровом мире</h2>
+          </div>
 
+          <canvas id="sphe-webgl-canvas"></canvas>
+        </div>
         <section class="contact section" id="contact">
             <h2 class="section-title">Контакты</h2>
 
@@ -169,10 +177,58 @@
         </section>
 
     </main>
+      <footer class="footer section">
+            <div class="footer-container bd-grid">
 
+                <div class="footer-data">
+                    <h2 class="footer-title">Easy Prod</h2>
+                    <ul>
+                        <li><a href="#home" class="footer-link">Главная</a></li>
+                        <li><a href="#about" class="footer-link">О нас</a></li>                       
+                        <li><a href="#portfolio" class="footer-link">Наши проекты</a></li>
+                        <li><a href="#contact" class="footer-link">Контакты</a></li>
+                    </ul>
+                </div>
+
+
+            </div>
+        </footer>
 
 
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="assets/js/main.js"></script>
+    <script type="module">
+          import Spheres2Background from 'https://cdn.jsdelivr.net/npm/threejs-components@0.0.8/build/backgrounds/spheres2.cdn.min.js'
+
+          const app = document.getElementById('sphe-app')
+          const canvas = app.querySelector('#sphe-webgl-canvas')
+          const button = app.querySelector('#sphe-colors-btn')
+
+          const bg = Spheres2Background(canvas, {
+            count: 200,
+            colors: [0xff0000, 0x0, 0xffffff],
+            minSize: 0.5,
+            maxSize: 1
+          })
+
+          // Только клики внутри sphe-app
+          app.addEventListener('click', (ev) => {
+            if (ev.target !== button) bg.togglePause()
+          })
+
+
+
+         function randomColors() {
+            bg.spheres.setColors([
+                  0xffffff * Math.random(),
+                  0xffffff * Math.random(),
+                  0xffffff * Math.random()
+                ])
+                bg.spheres.light1.color.set(0xffffff * Math.random())    
+         }
+
+         randomColors();
+    </script>
+
 </body>
 </html>
